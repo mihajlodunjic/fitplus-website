@@ -1,0 +1,64 @@
+---
+import { business } from "../data/business";
+import { seoDefaults } from "../data/seo";
+import type { StructuredData } from "../utils/structured-data";
+
+interface Props {
+  title: string;
+  description: string;
+  pathname: string;
+  imagePath?: string;
+  noindex?: boolean;
+  structuredData?: StructuredData[];
+}
+
+const {
+  title,
+  description,
+  pathname,
+  imagePath = seoDefaults.imagePath,
+  noindex = false,
+  structuredData = [],
+} = Astro.props;
+
+const siteOrigin = import.meta.env.PUBLIC_SITE_URL;
+const canonicalUrl = siteOrigin ? new URL(pathname, siteOrigin).toString() : undefined;
+const socialImage = siteOrigin ? new URL(imagePath, siteOrigin).toString() : undefined;
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>{title}</title>
+<meta name="description" content={description} />
+<meta name="theme-color" content="#111820" />
+{canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
+<meta name="robots" content={noindex ? "noindex, nofollow" : "index, follow"} />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content={seoDefaults.siteName} />
+<meta property="og:locale" content={seoDefaults.locale} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+{canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
+{socialImage && <meta property="og:image" content={socialImage} />}
+{socialImage && <meta property="og:image:width" content="1200" />}
+{socialImage && <meta property="og:image:height" content="630" />}
+{socialImage && (
+  <meta
+    property="og:image:alt"
+    content="Poster preview sajta Fit Plus Gym Jajinci sa naglašenom adresom Stojana Ljubića 71B."
+  />
+)}
+
+<meta name="twitter:card" content={socialImage ? "summary_large_image" : "summary"} />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+{socialImage && <meta name="twitter:image" content={socialImage} />}
+
+<link rel="icon" href={business.logo.src} sizes="150x150" type="image/png" />
+<link rel="apple-touch-icon" href={business.logo.src} />
+<link rel="manifest" href="/site.webmanifest" />
+
+{structuredData.map((entry) => (
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(entry)} />
+))}

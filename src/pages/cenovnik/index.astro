@@ -1,0 +1,175 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
+import PageHero from "../../components/PageHero.astro";
+import PricingBands from "../../components/PricingBands.astro";
+import { business, ctaLinks, primaryPhone } from "../../data/business";
+import { pricingPackages, pricingVerificationNote } from "../../data/pricing";
+import { seoByPath } from "../../data/seo";
+import { formatRsd } from "../../utils/format-currency";
+
+const seo = seoByPath["/cenovnik/"];
+const breadcrumbs = [
+  { name: "Početna", path: "/" },
+  { name: "Cenovnik", path: "/cenovnik/" },
+];
+const dailyPackage = pricingPackages.find((item) => item.id === "daily-package");
+const monthlyPackage = pricingPackages.find((item) => item.id === "monthly-package");
+const quarterPackage = pricingPackages.find((item) => item.id === "quarter-package");
+---
+
+<BaseLayout
+  title={seo.title}
+  description={seo.description}
+  pathname="/cenovnik/"
+  breadcrumbs={breadcrumbs}
+>
+  <PageHero
+    eyebrow="03 / Cenovnik"
+    title="Cene treninga."
+    lead="Sve cene su prikazane prema dostavljenom cenovniku, bez sabiranja osnovnih paketa i doplata koje još traže potvrdu poslovne logike."
+    mark="03"
+    infoRows={[
+      { label: "Adresa", value: business.address.street },
+      { label: "Poziv", value: primaryPhone.display },
+      { label: "Instagram", value: business.instagram.handle },
+    ]}
+    actions={[
+      { label: "Pozovi za detalje paketa", href: ctaLinks.call },
+      { label: "Idi na lokaciju", href: "/lokacija/", variant: "secondary" },
+    ]}
+  >
+    <Fragment slot="breadcrumbs">
+      <Breadcrumbs items={breadcrumbs} />
+    </Fragment>
+  </PageHero>
+
+  <section class="section section--paper">
+    <div class="section__inner">
+      <div class="pricing-intro surface-frame">
+        <div>
+          <span class="rule-label">Dostavljeni cenovnik</span>
+          <h2 class="section-title">Čitljiv HTML umesto screenshota.</h2>
+        </div>
+        <p>
+          Znak + ostaje vidljiv uz personalne i vođene treninge dok ne bude potvrđeno
+          da li se radi o doplatama ili o drugačijem modelu obračuna.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--charcoal">
+    <div class="section__inner">
+      <PricingBands mode="full" />
+    </div>
+  </section>
+
+  <section class="section section--surface">
+    <div class="section__inner pricing-notes">
+      <article class="pricing-note surface-frame">
+        <h2>Dnevni paket</h2>
+        <p>
+          {dailyPackage ? formatRsd(dailyPackage.amount) : "700 RSD"} i personalni trening
+          uz dnevni paket ostaju odvojeno prikazani.
+        </p>
+      </article>
+
+      <article class="pricing-note surface-frame">
+        <h2>Mesečni paket</h2>
+        <p>
+          {monthlyPackage ? formatRsd(monthlyPackage.amount) : "3.500 RSD"} nosi potvrđene
+          doplate za vođeni i personalni rad, ali bez sabiranja u ukupne iznose.
+        </p>
+      </article>
+
+      <article class="pricing-note surface-frame">
+        <h2>Paket za 3 meseca</h2>
+        <p>
+          {quarterPackage ? formatRsd(quarterPackage.amount) : "10.000 RSD"} je prikazan bez
+          izmišljenih dodatnih pogodnosti.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section section--paper section--tight">
+    <div class="section__inner pricing-contact">
+      <div class="pricing-contact__copy">
+        <span class="rule-label">Napomena o cenama</span>
+        <h2 class="section-title">Pozovi za detalje paketa.</h2>
+        <p class="lead">{pricingVerificationNote}</p>
+      </div>
+      <div class="pricing-contact__actions">
+        <a class="button button--primary" href={ctaLinks.call}>Pozovi {primaryPhone.display}</a>
+        <a class="button button--secondary" href={ctaLinks.instagram} rel="noreferrer" target="_blank">
+          Piši na Instagramu
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .pricing-intro {
+    display: grid;
+    gap: var(--space-4);
+    padding: var(--space-5);
+    background: var(--color-surface);
+  }
+
+  .pricing-notes {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--grid-gap);
+  }
+
+  .pricing-note {
+    padding: var(--space-5);
+    display: grid;
+    gap: var(--space-3);
+    background: var(--color-surface);
+  }
+
+  .pricing-note h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    font-weight: 700;
+    line-height: 0.95;
+    text-transform: uppercase;
+  }
+
+  .pricing-contact {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(18rem, 0.8fr);
+    gap: var(--grid-gap);
+    align-items: start;
+  }
+
+  .pricing-contact__copy {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .pricing-contact__actions {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  @media (max-width: 63.9375rem) {
+    .pricing-notes {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 47.9375rem) {
+    .pricing-intro,
+    .pricing-note {
+      padding: var(--space-4);
+    }
+
+    .pricing-contact {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,161 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
+import HoursTable from "../../components/HoursTable.astro";
+import PageHero from "../../components/PageHero.astro";
+import { business, ctaLinks, primaryPhone, secondaryPhone } from "../../data/business";
+import { openingHoursSummary } from "../../data/opening-hours";
+import { seoByPath } from "../../data/seo";
+
+const seo = seoByPath["/lokacija/"];
+const breadcrumbs = [
+  { name: "Početna", path: "/" },
+  { name: "Lokacija", path: "/lokacija/" },
+];
+---
+
+<BaseLayout
+  title={seo.title}
+  description={seo.description}
+  pathname="/lokacija/"
+  breadcrumbs={breadcrumbs}
+>
+  <PageHero
+    eyebrow="04 / Lokacija"
+    title="Stojana Ljubića 71b, Jajinci."
+    lead="Adresa, sedmodnevno radno vreme i telefoni za Fit Plus Gym ostaju objedinjeni na jednoj strani, bez ugrađene mape i bez izmišljenih smernica."
+    mark="71B"
+    infoRows={[
+      { label: "Adresa", value: business.address.full },
+      { label: "Radno vreme", value: openingHoursSummary.combined },
+      { label: "Instagram", value: business.instagram.handle },
+    ]}
+    actions={[
+      { label: "Otvori mapu", href: ctaLinks.map },
+      { label: "Pozovi 064 307 02 92", href: ctaLinks.call, variant: "secondary" },
+    ]}
+  >
+    <Fragment slot="breadcrumbs">
+      <Breadcrumbs items={breadcrumbs} />
+    </Fragment>
+  </PageHero>
+
+  <section class="section section--surface">
+    <div class="section__inner address-grid">
+      <div class="address-grid__copy">
+        <span class="rule-label">Adresa i mapa</span>
+        <h2 class="section-title">71B ostaje glavni orijentir.</h2>
+        <p class="lead">
+          Fit Plus Gym se nalazi u Jajincima, na adresi Stojana Ljubića 71b. Ako tačan
+          Google Maps profil nije potvrđen, koristi se adresni query link.
+        </p>
+      </div>
+      <div class="address-grid__card surface-frame">
+        <p>{business.address.full}</p>
+        <a class="button button--primary" href={ctaLinks.map} rel="noreferrer" target="_blank">
+          Otvori mapu
+        </a>
+        <p class="address-grid__meta">{business.address.areaLine}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--paper">
+    <div class="section__inner">
+      <div class="section-copy">
+        <span class="rule-label">Radno vreme</span>
+        <h2 class="section-title">Sedmodnevni pregled sa oznakom danas.</h2>
+      </div>
+      <HoursTable id="radno-vreme" showPilates={false} />
+    </div>
+  </section>
+
+  <section class="section section--surface">
+    <div class="section__inner contact-grid">
+      <article class="contact-card surface-frame">
+        <span class="rule-label">Kontakt</span>
+        <a class="nowrap tabular" href={primaryPhone.href}>{primaryPhone.display}</a>
+        <a class="nowrap tabular" href={secondaryPhone.href}>{secondaryPhone.display}</a>
+        <a href={ctaLinks.instagram} rel="noreferrer" target="_blank">
+          {business.instagram.handle}
+        </a>
+      </article>
+
+      <article class="contact-card surface-frame">
+        <span class="rule-label">Pre dolaska</span>
+        <p>
+          Ako dolaziš prvi put ili želiš vođeni, personalni ili pilates trening, pozovi i
+          proveri detalje termina.
+        </p>
+        <a class="text-link" href={ctaLinks.call}>Pozovi teretanu</a>
+      </article>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .section-copy {
+    display: grid;
+    gap: var(--space-4);
+    margin-bottom: var(--space-6);
+  }
+
+  .address-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(18rem, 0.85fr);
+    gap: var(--grid-gap);
+    align-items: start;
+  }
+
+  .address-grid__copy {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .address-grid__card {
+    padding: var(--space-5);
+    display: grid;
+    gap: var(--space-4);
+    background: var(--color-surface);
+  }
+
+  .address-grid__meta {
+    font-size: var(--font-size-label);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--grid-gap);
+  }
+
+  .contact-card {
+    padding: var(--space-5);
+    display: grid;
+    gap: var(--space-3);
+    background: var(--color-surface);
+  }
+
+  .contact-card a {
+    width: fit-content;
+    font-weight: 700;
+  }
+
+  @media (max-width: 63.9375rem) {
+    .address-grid,
+    .contact-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 47.9375rem) {
+    .address-grid__card,
+    .contact-card {
+      padding: var(--space-4);
+    }
+  }
+</style>

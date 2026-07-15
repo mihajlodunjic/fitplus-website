@@ -1,0 +1,146 @@
+---
+type Action = {
+  label: string;
+  href: string;
+  variant?: "primary" | "secondary";
+};
+
+type InfoRow = {
+  label: string;
+  value: string;
+};
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  lead: string;
+  mark?: string;
+  infoRows?: InfoRow[];
+  actions?: Action[];
+}
+
+const { eyebrow, title, lead, mark, infoRows = [], actions = [] } = Astro.props;
+---
+
+<section class="page-hero section section--ink">
+  <div class="section__inner grid-shell">
+    <div class="page-hero__content">
+      <div class="page-hero__top">
+        <span class="eyebrow">{eyebrow}</span>
+        <slot name="breadcrumbs" />
+      </div>
+
+      <h1 class="display-title">{title}</h1>
+      <p class="lead">{lead}</p>
+
+      {
+        actions.length > 0 && (
+          <div class="button-row">
+            {actions.map((action) => (
+              <a
+                class:list={[
+                  "button",
+                  action.variant === "secondary" ? "button--secondary" : "button--primary",
+                ]}
+                href={action.href}
+              >
+                {action.label}
+              </a>
+            ))}
+          </div>
+        )
+      }
+    </div>
+
+    <aside class="page-hero__aside ink-frame">
+      {mark && <p class="page-hero__mark number-mark">{mark}</p>}
+      {
+        infoRows.length > 0 && (
+          <dl class="page-hero__facts">
+            {infoRows.map((row) => (
+              <div>
+                <dt>{row.label}</dt>
+                <dd>{row.value}</dd>
+              </div>
+            ))}
+          </dl>
+        )
+      }
+      <slot name="aside" />
+    </aside>
+  </div>
+</section>
+
+<style>
+  .page-hero {
+    padding-top: var(--section-space-tight);
+  }
+
+  .page-hero__content {
+    grid-column: span 8;
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .page-hero__top {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .page-hero__content .lead {
+    color: rgba(250, 249, 246, 0.84);
+  }
+
+  .page-hero__aside {
+    grid-column: span 4;
+    padding: var(--space-5);
+    display: grid;
+    gap: var(--space-4);
+    align-content: start;
+  }
+
+  .page-hero__mark {
+    font-size: clamp(4rem, 9vw, 7rem);
+    line-height: 0.84;
+    color: var(--color-signal);
+  }
+
+  .page-hero__facts {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .page-hero__facts div {
+    display: grid;
+    gap: 0.15rem;
+    padding-top: var(--space-3);
+    border-top: var(--border-base) solid var(--color-line-dark);
+  }
+
+  .page-hero__facts dt {
+    font-size: var(--font-size-label);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(250, 249, 246, 0.72);
+  }
+
+  .page-hero__facts dd {
+    font-size: 1.1rem;
+    font-weight: 700;
+  }
+
+  @media (max-width: 63.9375rem) {
+    .page-hero__content,
+    .page-hero__aside {
+      grid-column: span 4;
+    }
+  }
+
+  @media (max-width: 47.9375rem) {
+    .page-hero__content,
+    .page-hero__aside {
+      grid-column: 1 / -1;
+    }
+  }
+</style>

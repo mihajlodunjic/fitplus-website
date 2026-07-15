@@ -1,0 +1,50 @@
+---
+import type { BreadcrumbItem } from "../utils/structured-data";
+
+interface Props {
+  items: BreadcrumbItem[];
+}
+
+const { items } = Astro.props;
+---
+
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+  <ol role="list">
+    {
+      items.map((item, index) => (
+        <li>
+          {index < items.length - 1 ? <a href={item.path}>{item.name}</a> : <span aria-current="page">{item.name}</span>}
+        </li>
+      ))
+    }
+  </ol>
+</nav>
+
+<style>
+  .breadcrumbs ol {
+    display: flex;
+    gap: var(--space-2);
+    flex-wrap: wrap;
+    align-items: center;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-label);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .breadcrumbs li {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .breadcrumbs li:not(:last-child)::after {
+    content: "/";
+    color: var(--color-signal);
+  }
+
+  .breadcrumbs a {
+    text-decoration: none;
+  }
+</style>

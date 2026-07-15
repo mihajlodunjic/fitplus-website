@@ -1,0 +1,390 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import HomeHero from "../components/HomeHero.astro";
+import HoursTable from "../components/HoursTable.astro";
+import PricingBands from "../components/PricingBands.astro";
+import ProgramRows from "../components/ProgramRows.astro";
+import { business, ctaLinks, primaryPhone } from "../data/business";
+import { openingHoursSummary } from "../data/opening-hours";
+import { pricingPackages } from "../data/pricing";
+import { programs, pilatesSchedule } from "../data/programs";
+import { reviewInsights } from "../data/reviews";
+import { seoByPath } from "../data/seo";
+import { formatRsd } from "../utils/format-currency";
+import { buildExerciseGymStructuredData } from "../utils/structured-data";
+
+const seo = seoByPath["/"];
+const siteOrigin = import.meta.env.PUBLIC_SITE_URL;
+const structuredData = siteOrigin ? [buildExerciseGymStructuredData(siteOrigin)] : [];
+const monthlyPackage = pricingPackages.find((item) => item.id === "monthly-package");
+const threeMonthPackage = pricingPackages.find((item) => item.id === "quarter-package");
+---
+
+<BaseLayout
+  title={seo.title}
+  description={seo.description}
+  pathname="/"
+  structuredData={structuredData}
+  pageClass="home-page"
+>
+  <HomeHero />
+
+  <section class="section section--surface section--tight">
+    <div class="section__inner">
+      <div class="quick-index surface-frame">
+        <a href="/cenovnik/" class="quick-index__item">
+          <span class="quick-index__label">Mesečni paket</span>
+          <strong class="quick-index__value tabular">
+            {monthlyPackage ? formatRsd(monthlyPackage.amount) : "3.500 RSD"}
+          </strong>
+        </a>
+        <a href="/lokacija/#radno-vreme" class="quick-index__item">
+          <span class="quick-index__label">Radnim danima</span>
+          <strong class="quick-index__value tabular">{openingHoursSummary.weekdays}</strong>
+        </a>
+        <a href="/lokacija/#radno-vreme" class="quick-index__item">
+          <span class="quick-index__label">Vikendom</span>
+          <strong class="quick-index__value tabular">{openingHoursSummary.weekend}</strong>
+        </a>
+        <a href="/treninzi/#pilates" class="quick-index__item">
+          <span class="quick-index__label">Pilates</span>
+          <strong class="quick-index__value tabular">
+            {pilatesSchedule.shortDays}, {pilatesSchedule.time}
+          </strong>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--paper">
+    <div class="section__inner grid-shell insights">
+      <div class="insights__editorial">
+        <span class="rule-label">Prostor i utisci</span>
+        <h2 class="section-title">Prostor, oprema, urednost.</h2>
+        <p class="lead">
+          Prema dostupnim utiscima korisnika, Fit Plus se izdvaja po prostranosti,
+          opremi, čistoći i prijatnijem treningu bez prevelike gužve.
+        </p>
+        <p>
+          Pošto nisu dostavljene potvrđene fotografije prostora za web, ovaj deo ostaje
+          namerno tipografski: informacije nose stvarni utisci i lokalni karakter, a ne
+          nasumična stock scena.
+        </p>
+        <a class="text-link" href="/treninzi/">Pogledaj načine treninga</a>
+      </div>
+
+      <div class="insights__poster surface-frame">
+        <p>PROSTOR</p>
+        <p>OPREMA</p>
+        <p>UREDAN RITAM</p>
+      </div>
+
+      <div class="insights__notes">
+        {reviewInsights.map((insight) => (
+          <article class="insight-note surface-frame">
+            <p>{insight.paraphrase}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--surface">
+    <div class="section__inner">
+      <div class="section-copy">
+        <span class="rule-label">Programski indeks</span>
+        <h2 class="section-title">Četiri načina treninga.</h2>
+        <p class="lead">
+          Ponuda je prikazana kao numerisani indeks, bez generičkih kartica i bez
+          izmišljanja programa koji nisu potvrđeni.
+        </p>
+      </div>
+      <ProgramRows items={programs} />
+    </div>
+  </section>
+
+  <section class="section section--paper">
+    <div class="section__inner">
+      <div class="section-copy">
+        <span class="rule-label">Raspored i radno vreme</span>
+        <h2 class="section-title">Tabela za dolazak i termin.</h2>
+        <p class="lead">
+          Radno vreme i pilates raspored tretirani su kao glavni funkcionalni sadržaj,
+          ne kao sitna fusnota ispod hero sekcije.
+        </p>
+      </div>
+      <HoursTable />
+    </div>
+  </section>
+
+  <section class="section section--charcoal">
+    <div class="section__inner">
+      <div class="section-copy section-copy--light">
+        <span class="rule-label">Cenovni pregled</span>
+        <h2 class="section-title">Crvene trake za stvarne cene.</h2>
+        <p class="lead">
+          Dnevni, mesečni i tromesečni paket prikazani su kao čitljiv HTML sadržaj, uz
+          zadržan znak + na svim doplatama koje još traže potvrdu poslovne logike.
+        </p>
+      </div>
+      <PricingBands mode="teaser" />
+      <div class="button-row pricing-actions">
+        <a class="button button--primary" href="/cenovnik/">
+          Pogledaj kompletan cenovnik
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--surface">
+    <div class="section__inner grid-shell location-block">
+      <div class="location-block__mark number-mark">71B</div>
+
+      <div class="location-block__copy">
+        <span class="rule-label">Jajinci, Stojana Ljubića 71b</span>
+        <h2 class="section-title">Lokalna oznaka koja vodi do ulaza.</h2>
+        <p class="lead">
+          Fit Plus Gym se nalazi u Jajincima, na adresi Stojana Ljubića 71b. Pre prvog
+          dolaska možeš nas pozvati i proveriti detalje treninga.
+        </p>
+      </div>
+
+      <div class="location-block__meta surface-frame">
+        <p>{business.address.full}</p>
+        <a class="nowrap tabular" href={primaryPhone.href}>
+          {primaryPhone.display}
+        </a>
+        <a href={ctaLinks.map} rel="noreferrer" target="_blank">
+          Otvori mapu
+        </a>
+        <a href={ctaLinks.instagram} rel="noreferrer" target="_blank">
+          {business.instagram.handle}
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--ink section--tight">
+    <div class="section__inner closing-strip">
+      <div class="closing-strip__copy">
+        <span class="rule-label">Završni kontakt</span>
+        <h2 class="section-title">Počni od cenovnika, poziva ili mape.</h2>
+        <p class="lead">
+          Fit Plus Gym u Jajincima ostaje fokusiran na konkretne informacije: adresu,
+          radno vreme, pakete i potvrđene termine.
+        </p>
+      </div>
+      <div class="closing-strip__actions">
+        <a class="button button--primary" href="/cenovnik/">
+          Pogledaj cenovnik
+        </a>
+        <a class="button button--secondary" href={ctaLinks.call}>
+          Pozovi {primaryPhone.display}
+        </a>
+        {threeMonthPackage && (
+          <p class="closing-strip__tag">
+            Paket za 3 meseca: <strong class="tabular">{formatRsd(threeMonthPackage.amount)}</strong>
+          </p>
+        )}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .section-copy {
+    display: grid;
+    gap: var(--space-4);
+    margin-bottom: var(--space-6);
+  }
+
+  .section-copy--light .lead {
+    color: rgba(250, 249, 246, 0.82);
+  }
+
+  .quick-index {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    background: var(--color-surface);
+  }
+
+  .quick-index__item {
+    display: grid;
+    gap: var(--space-2);
+    min-height: 8.5rem;
+    padding: var(--space-4);
+    text-decoration: none;
+  }
+
+  .quick-index__item + .quick-index__item {
+    border-left: var(--border-base) solid var(--color-line);
+  }
+
+  .quick-index__label {
+    font-size: var(--font-size-label);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+
+  .quick-index__value {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 3vw, 3rem);
+    line-height: 0.95;
+    text-transform: uppercase;
+  }
+
+  .insights {
+    align-items: start;
+  }
+
+  .insights__editorial {
+    grid-column: span 5;
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .insights__poster {
+    grid-column: span 3;
+    padding: clamp(var(--space-5), 4vw, var(--space-7));
+    display: grid;
+    gap: var(--space-3);
+    min-height: 100%;
+    align-content: center;
+    background: var(--color-surface);
+    box-shadow: var(--shadow-paper);
+  }
+
+  .insights__poster p {
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 4vw, 3.8rem);
+    font-weight: 800;
+    line-height: 0.9;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+
+  .insights__notes {
+    grid-column: span 4;
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .insight-note {
+    padding: var(--space-4);
+    background: var(--color-surface);
+  }
+
+  .location-block {
+    align-items: center;
+  }
+
+  .location-block__mark {
+    grid-column: span 4;
+    font-size: clamp(5rem, 14vw, 10rem);
+    line-height: 0.84;
+    color: var(--color-signal);
+  }
+
+  .location-block__copy {
+    grid-column: span 4;
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .location-block__meta {
+    grid-column: span 4;
+    padding: var(--space-5);
+    display: grid;
+    gap: var(--space-3);
+    background: var(--color-surface);
+  }
+
+  .location-block__meta a,
+  .location-block__meta p {
+    width: fit-content;
+    font-weight: 700;
+  }
+
+  .closing-strip {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(18rem, 0.8fr);
+    gap: var(--grid-gap);
+    align-items: start;
+  }
+
+  .closing-strip__copy {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .closing-strip__copy .lead {
+    color: rgba(250, 249, 246, 0.82);
+  }
+
+  .closing-strip__actions {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .closing-strip__tag {
+    color: rgba(250, 249, 246, 0.76);
+  }
+
+  .pricing-actions {
+    margin-top: var(--space-5);
+  }
+
+  @media (max-width: 63.9375rem) {
+    .quick-index {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .quick-index__item:nth-child(3),
+    .quick-index__item:nth-child(4) {
+      border-top: var(--border-base) solid var(--color-line);
+    }
+
+    .quick-index__item:nth-child(3) {
+      border-left: 0;
+    }
+
+    .insights__editorial,
+    .insights__poster,
+    .insights__notes,
+    .location-block__mark,
+    .location-block__copy,
+    .location-block__meta {
+      grid-column: span 4;
+    }
+
+    .closing-strip {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 47.9375rem) {
+    .quick-index {
+      grid-template-columns: 1fr;
+    }
+
+    .quick-index__item + .quick-index__item {
+      border-left: 0;
+      border-top: var(--border-base) solid var(--color-line);
+    }
+
+    .insights__editorial,
+    .insights__poster,
+    .insights__notes,
+    .location-block__mark,
+    .location-block__copy,
+    .location-block__meta {
+      grid-column: 1 / -1;
+    }
+
+    .quick-index__value {
+      font-size: clamp(1.8rem, 10vw, 2.6rem);
+    }
+  }
+</style>

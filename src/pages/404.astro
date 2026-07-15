@@ -1,0 +1,69 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { ctaLinks, primaryPhone } from "../data/business";
+import { seoByPath } from "../data/seo";
+
+const seo = seoByPath["/404/"];
+---
+
+<BaseLayout
+  title={seo.title}
+  description={seo.description}
+  pathname="/404.html"
+  noindex={true}
+>
+  <section class="not-found section section--ink">
+    <div class="section__inner not-found__inner">
+      <p class="not-found__code">404</p>
+      <div class="not-found__copy">
+        <span class="rule-label">Stranica nije pronađena</span>
+        <h1 class="section-title">Vrati se na cenovnik, lokaciju ili početnu.</h1>
+        <p class="lead">
+          Ako tražiš Fit Plus Gym u Jajincima, najbrže ćeš doći do informacija preko
+          cenovnika, radnog vremena ili direktnog poziva.
+        </p>
+      </div>
+      <div class="not-found__actions">
+        <a class="button button--primary" href="/">Nazad na početnu</a>
+        <a class="button button--secondary" href="/cenovnik/">Pogledaj cenovnik</a>
+        <a class="button button--secondary" href={ctaLinks.call}>Pozovi {primaryPhone.display}</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .not-found__inner {
+    display: grid;
+    gap: var(--space-6);
+  }
+
+  .not-found__code {
+    font-family: var(--font-display);
+    font-size: clamp(6rem, 18vw, 12rem);
+    font-weight: 800;
+    line-height: 0.84;
+    color: var(--color-signal);
+  }
+
+  .not-found__copy {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .not-found__copy .lead {
+    color: rgba(250, 249, 246, 0.82);
+  }
+
+  .not-found__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  @media (max-width: 47.9375rem) {
+    .not-found__actions {
+      flex-direction: column;
+    }
+  }
+</style>

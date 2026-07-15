@@ -1,0 +1,174 @@
+---
+import { ctaLinks } from "../data/business";
+import { openingHours, specialHours } from "../data/opening-hours";
+import { pilatesSchedule } from "../data/programs";
+
+interface Props {
+  id?: string;
+  showPilates?: boolean;
+}
+
+const { id = "radno-vreme", showPilates = true } = Astro.props;
+---
+
+<div class="hours-layout" id={id}>
+  {specialHours.length > 0 && (
+    <div class="hours-layout__special">
+      {specialHours.map((entry) => (
+        <p>{entry.message}</p>
+      ))}
+    </div>
+  )}
+
+  <div class="hours-layout__table surface-frame">
+    <table>
+      <caption class="visually-hidden">Sedmodnevno radno vreme Fit Plus Gym Jajinci</caption>
+      <thead class="visually-hidden">
+        <tr>
+          <th scope="col">Dan</th>
+          <th scope="col">Radno vreme</th>
+        </tr>
+      </thead>
+      <tbody>
+        {
+          openingHours.map((entry) => (
+            <tr
+              data-hours-row
+              data-day-key={entry.key}
+              data-day-label={entry.label}
+              data-opens={entry.opens}
+              data-closes={entry.closes}
+              class:list={[entry.isWeekend && "hours-layout__row--weekend"]}
+            >
+              <th scope="row">
+                <span>{entry.label}</span>
+                <span class="hours-layout__today">Danas</span>
+              </th>
+              <td class="tabular">
+                {entry.opens}–{entry.closes}
+              </td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+
+  {showPilates && (
+    <aside class="hours-layout__pilates surface-frame">
+      <span class="rule-label">Pilates</span>
+      <p class="hours-layout__pilates-days">{pilatesSchedule.shortDays}</p>
+      <p class="hours-layout__pilates-time tabular">{pilatesSchedule.time}</p>
+      <p>{pilatesSchedule.note}</p>
+      <a class="button button--primary" href={ctaLinks.call}>
+        Pozovi teretanu
+      </a>
+    </aside>
+  )}
+</div>
+
+<style>
+  .hours-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.55fr) minmax(17rem, 0.9fr);
+    gap: var(--grid-gap);
+    align-items: start;
+  }
+
+  .hours-layout__special {
+    grid-column: 1 / -1;
+    padding: var(--space-3) var(--space-4);
+    background: var(--color-signal);
+    color: var(--color-surface);
+  }
+
+  .hours-layout__table {
+    overflow: hidden;
+    background: var(--color-surface);
+  }
+
+  .hours-layout__table tbody tr + tr {
+    border-top: var(--border-base) solid var(--color-line);
+  }
+
+  .hours-layout__table tbody tr[data-today="true"] {
+    border-left: var(--border-signal) solid var(--color-signal);
+    background: rgba(209, 33, 41, 0.04);
+  }
+
+  .hours-layout__row--weekend th,
+  .hours-layout__row--weekend td {
+    border-top: var(--border-strong) double var(--color-line);
+  }
+
+  .hours-layout__table th,
+  .hours-layout__table td {
+    padding: var(--space-4);
+    min-height: 3rem;
+  }
+
+  .hours-layout__table th {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    font-weight: 700;
+  }
+
+  .hours-layout__table td {
+    font-weight: 700;
+    text-align: right;
+  }
+
+  .hours-layout__today {
+    display: none;
+    color: var(--color-signal);
+    font-size: var(--font-size-label);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .hours-layout__table tr[data-today="true"] .hours-layout__today {
+    display: inline-flex;
+  }
+
+  .hours-layout__pilates {
+    padding: var(--space-5);
+    display: grid;
+    gap: var(--space-3);
+    background: var(--color-surface);
+  }
+
+  .hours-layout__pilates-days {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 3vw, 2.8rem);
+    font-weight: 700;
+    line-height: 0.94;
+    text-transform: uppercase;
+  }
+
+  .hours-layout__pilates-time {
+    font-family: var(--font-display);
+    font-size: var(--font-size-price);
+    font-weight: 800;
+    line-height: 0.92;
+    color: var(--color-signal);
+  }
+
+  @media (max-width: 63.9375rem) {
+    .hours-layout {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 47.9375rem) {
+    .hours-layout__pilates {
+      order: -1;
+    }
+
+    .hours-layout__table th,
+    .hours-layout__table td {
+      padding: var(--space-3);
+    }
+  }
+</style>

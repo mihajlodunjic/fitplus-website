@@ -1,0 +1,173 @@
+---
+import { business, ctaLinks, primaryPhone, secondaryPhone } from "../data/business";
+import { footerNavigation } from "../data/navigation";
+import { openingHoursSummary } from "../data/opening-hours";
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer section section--ink section--tight">
+  <div class="site-footer__signal">
+    <div class="section__inner">
+      <p>{business.address.areaLine}</p>
+    </div>
+  </div>
+
+  <div class="section__inner site-footer__inner">
+    <div class="site-footer__lead">
+      <span class="rule-label">Završni kontakt</span>
+      <h2 class="section-title">Vidimo se u teretani.</h2>
+      <p class="lead">
+        Pozovi, proveri paket ili otvori mapu za Stojana Ljubića 71b pre prvog dolaska.
+      </p>
+    </div>
+
+    <div class="site-footer__meta">
+      <a class="site-footer__phone nowrap tabular" href={primaryPhone.href}>
+        {primaryPhone.display}
+      </a>
+      <a class="site-footer__phone nowrap tabular" href={secondaryPhone.href}>
+        {secondaryPhone.display}
+      </a>
+      <a href={ctaLinks.instagram} rel="noreferrer" target="_blank">
+        {business.instagram.handle}
+      </a>
+      <p>{openingHoursSummary.combined}</p>
+    </div>
+
+    <nav class="site-footer__nav" aria-label="Footer navigacija">
+      <ul role="list">
+        {
+          footerNavigation.map((item) => (
+            <li>
+              <a href={item.href}>{item.label}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="site-footer__legal">
+      <p>© {year} {business.fullName}</p>
+      <a href={ctaLinks.map} rel="noreferrer" target="_blank">
+        Otvori mapu
+      </a>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    padding-top: 0;
+  }
+
+  .site-footer__signal {
+    background: var(--color-signal);
+    color: var(--color-surface);
+    padding-block: var(--space-3);
+    border-top: var(--border-base) solid rgba(255, 255, 255, 0.16);
+    border-bottom: var(--border-base) solid rgba(255, 255, 255, 0.16);
+  }
+
+  .site-footer__signal p {
+    font-size: var(--font-size-label);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .site-footer__inner {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--grid-gap);
+    align-items: start;
+    padding-top: var(--section-space-tight);
+  }
+
+  .site-footer__lead {
+    grid-column: span 6;
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .site-footer__lead .lead {
+    color: rgba(250, 249, 246, 0.82);
+  }
+
+  .site-footer__meta {
+    grid-column: span 3;
+    display: grid;
+    gap: var(--space-2);
+    align-content: start;
+  }
+
+  .site-footer__meta a,
+  .site-footer__meta p {
+    width: fit-content;
+    min-height: var(--touch-target);
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .site-footer__phone {
+    font-weight: 700;
+  }
+
+  .site-footer__nav {
+    grid-column: span 3;
+  }
+
+  .site-footer__nav ul {
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .site-footer__nav a {
+    min-height: var(--touch-target);
+    display: inline-flex;
+    align-items: center;
+    font-weight: 700;
+  }
+
+  .site-footer__legal {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+    padding-top: var(--space-5);
+    border-top: var(--border-base) solid var(--color-line-dark);
+    color: rgba(250, 249, 246, 0.76);
+  }
+
+  @media (max-width: 63.9375rem) {
+    .site-footer__inner {
+      grid-template-columns: repeat(8, minmax(0, 1fr));
+    }
+
+    .site-footer__lead {
+      grid-column: span 4;
+    }
+
+    .site-footer__meta,
+    .site-footer__nav {
+      grid-column: span 2;
+    }
+  }
+
+  @media (max-width: 47.9375rem) {
+    .site-footer__inner {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .site-footer__lead,
+    .site-footer__meta,
+    .site-footer__nav {
+      grid-column: 1 / -1;
+    }
+
+    .site-footer__legal {
+      flex-direction: column;
+    }
+  }
+</style>

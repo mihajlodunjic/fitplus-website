@@ -1,0 +1,61 @@
+---
+import "../styles/global.css";
+
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+import SeoHead from "../components/SeoHead.astro";
+import { business } from "../data/business";
+import type { BreadcrumbItem, StructuredData } from "../utils/structured-data";
+import { buildBreadcrumbStructuredData } from "../utils/structured-data";
+
+interface Props {
+  title: string;
+  description: string;
+  pathname: string;
+  imagePath?: string;
+  noindex?: boolean;
+  breadcrumbs?: BreadcrumbItem[];
+  structuredData?: StructuredData[];
+  pageClass?: string;
+}
+
+const {
+  title,
+  description,
+  pathname,
+  imagePath,
+  noindex = false,
+  breadcrumbs = [],
+  structuredData = [],
+  pageClass = "",
+} = Astro.props;
+
+const siteOrigin = import.meta.env.PUBLIC_SITE_URL;
+const breadcrumbData = siteOrigin && breadcrumbs.length > 0 ? buildBreadcrumbStructuredData(siteOrigin, breadcrumbs) : null;
+const seoStructuredData = breadcrumbData ? [...structuredData, breadcrumbData] : structuredData;
+---
+
+<!doctype html>
+<html lang={business.language}>
+  <head>
+    <SeoHead
+      title={title}
+      description={description}
+      pathname={pathname}
+      imagePath={imagePath}
+      noindex={noindex}
+      structuredData={seoStructuredData}
+    />
+  </head>
+  <body class={pageClass}>
+    <a class="skip-link" href="#main-content">Preskoči na sadržaj</a>
+    <Header currentPath={pathname} />
+    <main id="main-content">
+      <slot />
+    </main>
+    <Footer />
+    <script>
+      import "../scripts/site.ts";
+    </script>
+  </body>
+</html>

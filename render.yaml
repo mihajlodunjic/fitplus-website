@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: fit-plus-gym-jajinci
+    runtime: static
+    buildCommand: npm ci && npm run build
+    staticPublishPath: ./dist
+    envVars:
+      - key: PUBLIC_SITE_URL
+        sync: false

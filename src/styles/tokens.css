@@ -1,0 +1,65 @@
+:root {
+  --color-ink: #111820;
+  --color-charcoal: #201d24;
+  --color-paper: #f3f0ea;
+  --color-surface: #faf9f6;
+  --color-muted-surface: #e6e2db;
+  --color-signal: #d12129;
+  --color-signal-hover: #b71922;
+  --color-text: #17191d;
+  --color-text-muted: #66666a;
+  --color-line: #c9c5be;
+  --color-line-dark: #3a3e45;
+  --color-focus: #f0b429;
+  --font-display:
+    "Barlow Condensed", "Arial Narrow", "Roboto Condensed", sans-serif;
+  --font-body: "Source Sans 3", "Segoe UI", Arial, sans-serif;
+  --font-size-h1: clamp(3.25rem, 7vw, 8.25rem);
+  --font-size-h2: clamp(2.5rem, 5vw, 5rem);
+  --font-size-h3: clamp(1.8rem, 3vw, 2.8rem);
+  --font-size-lead: clamp(1.125rem, 1.8vw, 1.45rem);
+  --font-size-body: clamp(1rem, 1vw, 1.125rem);
+  --font-size-label: clamp(0.75rem, 0.8vw, 0.875rem);
+  --font-size-price: clamp(2rem, 4vw, 4rem);
+  --font-size-number: clamp(3.75rem, 10vw, 8rem);
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4.5rem;
+  --space-9: 6rem;
+  --space-10: 8rem;
+  --page-margin: clamp(1rem, 2.8vw, 4.5rem);
+  --section-space: clamp(4.5rem, 9vw, 8rem);
+  --section-space-tight: clamp(3rem, 6vw, 5rem);
+  --max-content-width: 82.5rem;
+  --max-copy-width: 40rem;
+  --grid-gap: 1.5rem;
+  --border-base: 1px;
+  --border-strong: 2px;
+  --border-signal: 4px;
+  --radius-none: 0;
+  --radius-soft: 2px;
+  --transition-base: 180ms ease;
+  --transition-slow: 240ms ease;
+  --shadow-paper: 6px 6px 0 rgba(17, 24, 32, 0.14);
+  --header-height: clamp(5rem, 8vw, 5.9rem);
+  --touch-target: 3rem;
+}
+
+@media (max-width: 63.9375rem) {
+  :root {
+    --grid-gap: 1.25rem;
+  }
+}
+
+@media (max-width: 47.9375rem) {
+  :root {
+    --grid-gap: 1rem;
+    --section-space: clamp(3.5rem, 12vw, 5rem);
+    --section-space-tight: clamp(2.5rem, 8vw, 3.5rem);
+  }
+}

@@ -1,0 +1,155 @@
+---
+import { pricingPackages, pricingVerificationNote } from "../data/pricing";
+import { formatRsd, formatSupplement } from "../utils/format-currency";
+
+interface Props {
+  mode?: "teaser" | "full";
+}
+
+const { mode = "teaser" } = Astro.props;
+const isTeaser = mode === "teaser";
+---
+
+<div class="pricing-bands" data-mode={mode}>
+  <div class="pricing-bands__grid">
+    {
+      pricingPackages.map((pricingPackage) => (
+        <article class:list={["pricing-card", pricingPackage.id === "monthly-package" && "pricing-card--feature"]}>
+          <header class="pricing-card__top">
+            <h3>{pricingPackage.name}</h3>
+            <p class="tabular">{formatRsd(pricingPackage.amount)}</p>
+          </header>
+
+          <div class:list={["pricing-card__body", pricingPackage.id === "monthly-package" ? "surface-frame" : "ink-frame"]}>
+            <p class="pricing-card__note">{pricingPackage.note}</p>
+
+            {pricingPackage.supplements && (
+              <ul role="list" class="pricing-card__supplements">
+                {pricingPackage.supplements.map((supplement) => (
+                  <li>
+                    <span>{supplement.label}</span>
+                    <strong class="tabular">{formatSupplement(supplement.amount)}</strong>
+                  </li>
+                ))}
+              </ul>
+            )}
+
+            {!pricingPackage.supplements && !isTeaser && (
+              <p class="pricing-card__empty">Nisu dostavljeni dodatni uslovi za ovu stavku.</p>
+            )}
+          </div>
+        </article>
+      ))
+    }
+  </div>
+
+  <p class="pricing-bands__note">{pricingVerificationNote}</p>
+</div>
+
+<style>
+  .pricing-bands {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .pricing-bands__grid {
+    display: grid;
+    grid-template-columns: 0.9fr 1.25fr 0.95fr;
+    gap: var(--grid-gap);
+    align-items: start;
+  }
+
+  .pricing-card {
+    display: grid;
+    gap: 0;
+  }
+
+  .pricing-card__top {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: var(--space-3);
+    align-items: end;
+    padding: var(--space-4);
+    background: var(--color-signal);
+    color: var(--color-surface);
+  }
+
+  .pricing-card__top h3 {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 3vw, 2.7rem);
+    font-weight: 700;
+    line-height: 0.92;
+    text-transform: uppercase;
+  }
+
+  .pricing-card__top p {
+    font-family: var(--font-display);
+    font-size: clamp(1.85rem, 3vw, 3rem);
+    font-weight: 800;
+    line-height: 0.92;
+  }
+
+  .pricing-card__body {
+    padding: var(--space-4);
+    display: grid;
+    gap: var(--space-4);
+    min-height: 100%;
+  }
+
+  .pricing-card--feature .pricing-card__body {
+    background: var(--color-surface);
+    color: var(--color-text);
+  }
+
+  .pricing-card:not(.pricing-card--feature) .pricing-card__body {
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--color-surface);
+  }
+
+  .pricing-card__note,
+  .pricing-card__empty {
+    color: inherit;
+  }
+
+  .pricing-card__supplements {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .pricing-card__supplements li {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: var(--space-3);
+    padding-top: var(--space-3);
+    border-top: var(--border-base) solid currentColor;
+  }
+
+  .pricing-card__supplements strong {
+    white-space: nowrap;
+  }
+
+  .pricing-bands__note {
+    max-width: 44rem;
+    color: currentColor;
+  }
+
+  [data-mode="full"] .pricing-bands__note {
+    color: var(--color-text-muted);
+  }
+
+  @media (max-width: 63.9375rem) {
+    .pricing-bands__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 47.9375rem) {
+    .pricing-card__top {
+      grid-template-columns: 1fr;
+    }
+
+    .pricing-card__supplements li {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

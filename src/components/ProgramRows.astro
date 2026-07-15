@@ -1,0 +1,139 @@
+---
+import type { Program } from "../data/programs";
+
+interface Props {
+  items: Program[];
+  linkMode?: "page" | "internal";
+}
+
+const { items, linkMode = "page" } = Astro.props;
+---
+
+<div class="program-rows">
+  <ul role="list">
+    {
+      items.map((program) => {
+        const href = linkMode === "internal" ? `#${program.id}` : program.anchorHref;
+
+        return (
+          <li>
+            <a href={href} class="program-row">
+              <span class="program-row__index">{program.index}</span>
+              <div class="program-row__content">
+                <div class="program-row__heading">
+                  <h3>{program.name}</h3>
+                  <span class="program-row__badge">{program.badge}</span>
+                </div>
+                <p>{program.shortDescription}</p>
+                <p class="program-row__meta">{program.facts[0]}</p>
+              </div>
+              <span class="program-row__cta">{program.cta.label}</span>
+            </a>
+          </li>
+        );
+      })
+    }
+  </ul>
+</div>
+
+<style>
+  .program-rows ul {
+    display: grid;
+    gap: 0;
+    border-top: var(--border-base) solid var(--color-line);
+  }
+
+  .program-row {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(3.5rem, 5rem) 1fr auto;
+    gap: var(--space-4);
+    align-items: start;
+    padding: var(--space-4) 0;
+    border-bottom: var(--border-base) solid var(--color-line);
+    text-decoration: none;
+  }
+
+  .program-row::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    width: 6rem;
+    height: var(--border-strong);
+    background: var(--color-signal);
+    transform: scaleX(0.42);
+    transform-origin: left;
+    transition: transform var(--transition-base);
+  }
+
+  .program-row:hover::after,
+  .program-row:focus-visible::after {
+    transform: scaleX(1);
+  }
+
+  .program-row__index {
+    font-family: var(--font-display);
+    font-size: clamp(2.4rem, 5vw, 3.5rem);
+    font-weight: 800;
+    line-height: 0.9;
+    color: var(--color-signal);
+  }
+
+  .program-row__content {
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .program-row__heading {
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .program-row__heading h3 {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 2.9rem);
+    font-weight: 700;
+    line-height: 0.92;
+    text-transform: uppercase;
+  }
+
+  .program-row__badge {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-label);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .program-row__meta {
+    color: var(--color-text-muted);
+  }
+
+  .program-row__cta {
+    align-self: center;
+    min-height: var(--touch-target);
+    display: inline-flex;
+    align-items: center;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .program-row__cta::after {
+    content: "→";
+    margin-left: var(--space-2);
+    color: var(--color-signal);
+  }
+
+  @media (max-width: 47.9375rem) {
+    .program-row {
+      grid-template-columns: 1fr;
+      gap: var(--space-3);
+      padding-block: var(--space-4);
+    }
+
+    .program-row__cta {
+      justify-content: flex-start;
+    }
+  }
+</style>
