@@ -13,7 +13,13 @@ const { mode = "teaser" } = Astro.props;
   <div class="pricing-bands__grid">
     {
       pricingPackages.map((pricingPackage) => (
-        <article class:list={["pricing-card", pricingPackage.id === "monthly-package" && "pricing-card--feature"]}>
+        <article
+          class:list={[
+            "pricing-card",
+            pricingPackage.id === "monthly-package" && "pricing-card--feature",
+            pricingPackage.id === "quarter-package" && "pricing-card--quarter",
+          ]}
+        >
           <header class="pricing-card__top">
             <h3>{pricingPackage.name}</h3>
             <p class="tabular">{formatRsd(pricingPackage.amount)}</p>
@@ -83,6 +89,13 @@ const { mode = "teaser" } = Astro.props;
     font-size: clamp(1.85rem, 3vw, 3rem);
     font-weight: 800;
     line-height: 0.92;
+    white-space: nowrap;
+  }
+
+  .pricing-card--quarter .pricing-card__top {
+    grid-template-columns: 1fr;
+    gap: var(--space-2);
+    align-items: start;
   }
 
   .pricing-card__body {
