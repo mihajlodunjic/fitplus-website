@@ -25,7 +25,7 @@ const { items, linkMode = "page" } = Astro.props;
                   <span class="program-row__badge">{program.badge}</span>
                 </div>
                 <p>{program.shortDescription}</p>
-                <p class="program-row__meta">{program.facts[0]}</p>
+                {program.facts[0] && <p class="program-row__meta">{program.facts[0]}</p>}
               </div>
               <span class="program-row__cta">{program.cta.label}</span>
             </a>

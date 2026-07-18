@@ -27,7 +27,7 @@ const quarterPackage = pricingPackages.find((item) => item.id === "quarter-packa
   <PageHero
     eyebrow="03 / Cenovnik"
     title="Cene treninga."
-    lead="Sve cene su prikazane prema dostavljenom cenovniku, bez sabiranja osnovnih paketa i doplata koje još traže potvrdu poslovne logike."
+    lead="Cene su prikazane po stavkama, bez sabiranja osnovnih paketa i doplata za vođeni ili personalni trening."
     mark="03"
     infoRows={[
       { label: "Adresa", value: business.address.street },
@@ -48,12 +48,12 @@ const quarterPackage = pricingPackages.find((item) => item.id === "quarter-packa
     <div class="section__inner">
       <div class="pricing-intro surface-frame">
         <div>
-          <span class="rule-label">Dostavljeni cenovnik</span>
-          <h2 class="section-title">Čitljiv HTML umesto screenshota.</h2>
+          <span class="rule-label">Cenovnik</span>
+          <h2 class="section-title">Pregled osnovnih paketa i doplata.</h2>
         </div>
         <p>
-          Znak + ostaje vidljiv uz personalne i vođene treninge dok ne bude potvrđeno
-          da li se radi o doplatama ili o drugačijem modelu obračuna.
+          Znak + ostaje uz personalne i vođene treninge, pa su osnovni paketi i doplate
+          prikazani odvojeno.
         </p>
       </div>
     </div>
@@ -78,16 +78,16 @@ const quarterPackage = pricingPackages.find((item) => item.id === "quarter-packa
       <article class="pricing-note surface-frame">
         <h2>Mesečni paket</h2>
         <p>
-          {monthlyPackage ? formatRsd(monthlyPackage.amount) : "3.500 RSD"} nosi potvrđene
-          doplate za vođeni i personalni rad, ali bez sabiranja u ukupne iznose.
+          {monthlyPackage ? formatRsd(monthlyPackage.amount) : "3.500 RSD"} ima odvojeno
+          prikazane doplate za vođeni i personalni rad.
         </p>
       </article>
 
       <article class="pricing-note surface-frame">
         <h2>Paket za 3 meseca</h2>
         <p>
-          {quarterPackage ? formatRsd(quarterPackage.amount) : "10.000 RSD"} je prikazan bez
-          izmišljenih dodatnih pogodnosti.
+          {quarterPackage ? formatRsd(quarterPackage.amount) : "10.000 RSD"} je prikazan
+          kao posebna tromesečna opcija.
         </p>
       </article>
     </div>

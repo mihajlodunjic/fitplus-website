@@ -7,7 +7,6 @@ interface Props {
 }
 
 const { mode = "teaser" } = Astro.props;
-const isTeaser = mode === "teaser";
 ---
 
 <div class="pricing-bands" data-mode={mode}>
@@ -34,9 +33,6 @@ const isTeaser = mode === "teaser";
               </ul>
             )}
 
-            {!pricingPackage.supplements && !isTeaser && (
-              <p class="pricing-card__empty">Nisu dostavljeni dodatni uslovi za ovu stavku.</p>
-            )}
           </div>
         </article>
       ))
@@ -106,8 +102,7 @@ const isTeaser = mode === "teaser";
     color: var(--color-surface);
   }
 
-  .pricing-card__note,
-  .pricing-card__empty {
+  .pricing-card__note {
     color: inherit;
   }
 

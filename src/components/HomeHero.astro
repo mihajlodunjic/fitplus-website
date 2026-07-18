@@ -55,7 +55,7 @@ const trainingModes = programs.map((program) => program.name).join(" / ");
       <dl class="home-hero__facts">
         <div>
           <dt>Adresa</dt>
-          <dd>{business.address.street}</dd>
+          <dd>{business.address.street}, {business.address.locality}</dd>
         </div>
         <div>
           <dt>Radno vreme</dt>
@@ -105,6 +105,7 @@ const trainingModes = programs.map((program) => program.name).join(" / ");
     gap: var(--space-5);
     align-content: start;
     background: var(--color-surface);
+    color: var(--color-text);
   }
 
   .home-hero__stamp {
@@ -144,6 +145,9 @@ const trainingModes = programs.map((program) => program.name).join(" / ");
 
   .home-hero__facts dd {
     font-weight: 700;
+    font-size: clamp(1.1rem, 1.6vw, 1.35rem);
+    line-height: 1.28;
+    color: var(--color-text);
   }
 
   .home-hero__modes {

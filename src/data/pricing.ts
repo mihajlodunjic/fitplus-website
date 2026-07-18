@@ -35,7 +35,7 @@ export const pricingPackages: PricingPackage[] = [
     period: "day",
     relatedProgramId: "samostalni",
     requiresVerification: true,
-    note: "Osnovna dnevna opcija iz dostavljenog cenovnika.",
+    note: "Dnevna opcija za jedan dolazak u teretanu.",
     supplements: [
       {
         id: "daily-personal-supplement",
@@ -47,7 +47,7 @@ export const pricingPackages: PricingPackage[] = [
         period: "day",
         relatedProgramId: "personalni",
         requiresVerification: true,
-        note: "Zadržan je originalni znak + dok se ne potvrdi tačna poslovna logika doplate.",
+        note: "Ova stavka se prikazuje odvojeno od osnovnog paketa.",
       },
     ],
   },
@@ -60,7 +60,7 @@ export const pricingPackages: PricingPackage[] = [
     period: "month",
     relatedProgramId: "samostalni",
     requiresVerification: true,
-    note: "Mesečni paket nosi najveći broj potvrđenih varijanti u cenovniku.",
+    note: "Mesečni paket uz dodatne opcije vođenog i personalnog treninga.",
     supplements: [
       {
         id: "monthly-guided-supplement",
@@ -73,7 +73,7 @@ export const pricingPackages: PricingPackage[] = [
         sessionCount: 12,
         relatedProgramId: "vodjeni",
         requiresVerification: true,
-        note: "Prikazano kao doplata, bez sabiranja sa osnovnom članarinom.",
+        note: "Ova stavka se prikazuje odvojeno od osnovnog paketa.",
       },
       {
         id: "monthly-personal-8-supplement",
@@ -86,7 +86,7 @@ export const pricingPackages: PricingPackage[] = [
         sessionCount: 8,
         relatedProgramId: "personalni",
         requiresVerification: true,
-        note: "Prikazano kao doplata, bez sabiranja sa osnovnom članarinom.",
+        note: "Ova stavka se prikazuje odvojeno od osnovnog paketa.",
       },
       {
         id: "monthly-personal-12-supplement",
@@ -99,7 +99,7 @@ export const pricingPackages: PricingPackage[] = [
         sessionCount: 12,
         relatedProgramId: "personalni",
         requiresVerification: true,
-        note: "Prikazano kao doplata, bez sabiranja sa osnovnom članarinom.",
+        note: "Ova stavka se prikazuje odvojeno od osnovnog paketa.",
       },
     ],
   },
@@ -112,7 +112,7 @@ export const pricingPackages: PricingPackage[] = [
     period: "quarter",
     relatedProgramId: "samostalni",
     requiresVerification: true,
-    note: "Tromesečna opcija bez dodatno potvrđenih pogodnosti.",
+    note: "Tromesečna opcija za duži ritam treninga.",
   },
 ];
 

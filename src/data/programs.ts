@@ -33,11 +33,8 @@ export const programs: Program[] = [
     anchorHref: "/treninzi/#samostalni",
     badge: "DNEVNI / MESEČNI / 3 MESECA",
     shortDescription:
-      "Za trening svojim ritmom, uz izbor dnevnog, mesečnog ili tromesečnog paketa iz centralnog cenovnika.",
-    facts: [
-      "Dostupni su dnevni, mesečni i tromesečni paketi.",
-      "Ponuda je vezana za stvarni cenovnik, bez izmišljanja dodatnih pogodnosti.",
-    ],
+      "Vežbaj svojim ritmom uz izbor dnevnog, mesečnog ili tromesečnog paketa.",
+    facts: [],
     pricingReferenceIds: ["daily-package", "monthly-package", "quarter-package"],
     cta: {
       label: "Pogledaj cenovnik",
@@ -52,11 +49,8 @@ export const programs: Program[] = [
     anchorHref: "/treninzi/#vodjeni",
     badge: "12 TERMINA",
     shortDescription:
-      "Rad uz vođenje trenera, sa potvrđenom varijantom od 12 termina koja ostaje vezana za dostavljeni cenovnik.",
-    facts: [
-      "U cenovniku je potvrđena stavka za 12 termina.",
-      "Ne navode se veličina grupe, trajanje termina ni dodatni planovi.",
-    ],
+      "Dvanaest termina rada uz vođenje trenera za vežbače kojima odgovara dodatna podrška tokom treninga.",
+    facts: ["12 termina uz mesečni paket."],
     pricingReferenceIds: ["monthly-guided-supplement"],
     cta: {
       label: "Pozovi i proveri detalje",
@@ -71,11 +65,8 @@ export const programs: Program[] = [
     anchorHref: "/treninzi/#personalni",
     badge: "8 I 12 TERMINA",
     shortDescription:
-      "Direktan rad sa trenerom kroz dostavljene opcije od 8 ili 12 termina, kao i kroz doplatu uz dnevni paket.",
-    facts: [
-      "Potvrđene su opcije od 8 i 12 termina u okviru mesečnog paketa.",
-      "Znak + ostaje uz doplate dok se ne potvrdi način obračuna.",
-    ],
+      "Individualniji rad sa trenerom dostupan je kroz pakete od 8 ili 12 termina, kao i kao doplata uz dnevni paket.",
+    facts: ["Paketi od 8 ili 12 termina, uz opciju doplate uz dnevni paket."],
     pricingReferenceIds: [
       "daily-personal-supplement",
       "monthly-personal-8-supplement",
@@ -94,11 +85,8 @@ export const programs: Program[] = [
     anchorHref: "/treninzi/#pilates",
     badge: "PON / SRE / PET, 18:00",
     shortDescription:
-      "Pilates je trenutno prikazan samo kroz potvrđene termine: ponedeljak, sreda i petak u 18:00.",
-    facts: [
-      "Cena nije dostavljena i zato nije prikazana.",
-      "Aktuelnost termina treba potvrditi pre produkcije i dolaska.",
-    ],
+      "Pilates treninzi održavaju se ponedeljkom, sredom i petkom u 18:00.",
+    facts: ["PON / SRE / PET u 18:00."],
     pricingReferenceIds: [],
     scheduleReference: "PON / SRE / PET, 18:00",
     cta: {

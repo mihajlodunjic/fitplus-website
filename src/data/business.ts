@@ -68,13 +68,6 @@ export const business = {
   deployment: {
     publicSiteUrlEnv: "PUBLIC_SITE_URL",
   },
-  verification: {
-    pricing: "Aktuelnost cenovnika i značenje doplata treba potvrditi pre produkcije.",
-    pilates: "Pilates termini su prikazani prema dostavljenim podacima i zahtevaju potvrdu aktuelnosti.",
-    phones: "Potrebno je potvrditi da su oba broja i dalje aktivna i za koje vrste upita se koriste.",
-    productionUrl: "Produkcioni domen nije potvrđen i mora biti unet kroz PUBLIC_SITE_URL.",
-    photography: "Nisu dostavljene potvrđene fotografije prostora visoke rezolucije za web upotrebu.",
-  },
 } as const;
 
 export const primaryPhone = business.phones.find((phone) => phone.isPrimary) ?? business.phones[0];
