@@ -5,6 +5,60 @@ const REDUCED_MOTION = window.matchMedia("(prefers-reduced-motion: reduce)");
 const FOCUSABLE_SELECTOR =
   'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
+function isHomePagePath(pathname: string) {
+  return pathname === "/" || pathname === "/index.html";
+}
+
+function isAllowedHomeOnlyHref(rawHref: string) {
+  const href = rawHref.trim();
+
+  if (!href) {
+    return true;
+  }
+
+  if (href.startsWith("#")) {
+    return true;
+  }
+
+  try {
+    const url = new URL(href, window.location.href);
+
+    return url.origin === window.location.origin && isHomePagePath(url.pathname);
+  } catch {
+    return false;
+  }
+}
+
+function initHomeOnlyLinks() {
+  const links = document.querySelectorAll<HTMLAnchorElement>("a[href]");
+
+  for (const link of links) {
+    const href = link.getAttribute("href");
+
+    if (!href || isAllowedHomeOnlyHref(href)) {
+      continue;
+    }
+
+    link.dataset.lockedDestination = link.href;
+    link.setAttribute("href", "/");
+    link.removeAttribute("target");
+  }
+
+  const preventHomeReload = (event: MouseEvent) => {
+    const target = event.target instanceof Element ? event.target : null;
+    const link = target?.closest("a[data-locked-destination]");
+
+    if (!link || !isHomePagePath(window.location.pathname)) {
+      return;
+    }
+
+    event.preventDefault();
+  };
+
+  document.addEventListener("click", preventHomeReload, true);
+  document.addEventListener("auxclick", preventHomeReload, true);
+}
+
 function initTodayLabels() {
   const todayKey = getCurrentDayKey(new Date(), "Europe/Belgrade");
   const rows = Array.from(
@@ -157,6 +211,7 @@ function initMobileMenu() {
 }
 
 function initSite() {
+  initHomeOnlyLinks();
   initTodayLabels();
   initMobileMenu();
 }
